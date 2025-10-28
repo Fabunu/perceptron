@@ -71,7 +71,7 @@ class VentanaPrincipal:
         texto_abajo = ttk.Label(
         canvas_frame, 
         
-        text="""Este perceptron solo reconoce números del 0 al 9 y figuras como:
+        text="""Este perceptron solo reconoce números del 1 al 9 y figuras como:
         Circulo, Triangulo, Cuadrado, Corazón, Estrella """,
         font=("Arial", 9),
         foreground="red",

@@ -260,11 +260,36 @@ def crear_imagen_forma(tipo: str, size: Tuple[int, int] = (100, 100)) -> bytes:
     with io.BytesIO() as output:
         img.save(output, format='PNG')
         return output.getvalue()
+    
+def crear_imagen_numero(numero: str, size: Tuple[int, int] = (100, 100)) -> bytes:
+    """
+    Crea una imagen PNG en bytes con numeros
+    """
+    if not PIL_AVAILABLE:
+        raise ImportError("Pillow no está instalado")
+    
+    img = Image.new('L', size, color=0)
+    draw = ImageDraw.Draw(img)
+    w, h = size
+
+    #calcular posicion para centrar
+    bbox = draw.textbbox((0, 0), numero)
+    text_width = bbox[2] - bbox[0]
+    text_height = bbox[3] - bbox[1]
+    x = (w - text_width) // 2
+    y = (h - text_height) // 2
+
+    #dibujar numero
+    draw.text((x, y), numero, fill=255)
+    with io.BytesIO() as output:
+        img.save(output, format='PNG')
+        return output.getvalue()
 
 if __name__ == "__main__":
     if PIL_AVAILABLE:
         # Crear dataset de ejemplo si no existe
         formas = ['cuadrado', 'triangulo', 'circulo', 'estrella', 'corazon']
+        numeros = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
         dataset_path = 'dataset'
         
         for forma in formas:
@@ -277,6 +302,16 @@ if __name__ == "__main__":
                 with open(os.path.join(forma_folder, f'{forma}_{i}.png'), 'wb') as f:
                     f.write(img_bytes)
         
+        #imagenes de numeros
+        for numero in numeros:
+            numero_folder = os.path.join(dataset_path, numero)
+            os.makedirs(numero_folder, exist_ok=True)
+            
+            for i in range(5):
+                img_bytes = crear_imagen_numero(numero)
+                with open(os.path.join(numero_folder, f'numero_{numero}_{i}.png'), 'wb') as f:
+                    f.write(img_bytes)
+                    
         print("Dataset de ejemplo creado!")
     else:
         print("Instala Pillow primero: pip install pillow")

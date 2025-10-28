@@ -125,6 +125,42 @@ class VentanaEntrenamiento:
                 width=10
             )
             btn.pack(side=tk.LEFT, padx=2, pady=2)
+
+        # 3. botones pa los numeros
+        numeros_frame = ttk.LabelFrame(parent, text= "Guardar numero dibujado", padding=10)
+        numeros_frame.pack(fill=tk.X, pady=10)
+
+        #un frame para hacer 2 filas de 5 numeros
+        numeros_grid_frame = ttk.Frame(numeros_frame)
+        numeros_grid_frame.pack(fill=tk.X, pady=5)
+
+        # primera fila
+        fila1 = ttk.Frame(numeros_grid_frame)
+        fila1.pack(fill=tk.X, pady=2)
+        for num in ['1', '2', '3', '4', '5']:
+            btn = tk.Button(
+                fila1,
+                text=num,
+                bg="#9067c7",
+                fg='black',
+                command=lambda n=num: self.guardar_dibujo_actual(n),
+                width=4
+            )
+            btn.pack(side=tk.LEFT, padx=2)
+
+        # segunda fila
+        fila2 = ttk.Frame(numeros_grid_frame)
+        fila2.pack(fill=tk.X, pady=2)
+        for num in ['6', '7', '8', '9']:
+            btn = tk.Button(
+                fila2,
+                text=num,
+                bg="#9067c7",
+                fg='black',
+                command=lambda n=num: self.guardar_dibujo_actual(n),
+                width=4
+            )
+            btn.pack(side=tk.LEFT, padx=2)
         
         
         # 4. BOTÓN DE ENTRENAMIENTO
